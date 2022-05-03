@@ -12,7 +12,7 @@ import argparse
 import numpy as np
 
 class SSearch :
-    def __init__(self, config_file, model_name):
+    def __init__(self, config_file, model_name, layer):
         
         self.configuration = conf.ConfigurationFile(config_file, model_name)
         #defiing input_shape                    
@@ -28,9 +28,9 @@ class SSearch :
                                                classes=1000)
         model.summary()
         #redefining the model to get the hidden output
-        color_layer =  'conv2_block3_out'
-        texture_layer =  'conv4_block6_out'
-        self.output_layer_name = color_layer
+        #color_layer =  'conv2_block3_out'
+        #texture_layer =  'conv4_block6_out'
+        self.output_layer_name = layer
         output = model.get_layer(self.output_layer_name).output
         output = tf.keras.layers.GlobalAveragePooling2D()(output)                
         self.sim_model = tf.keras.Model(model.input, output)        
@@ -161,9 +161,10 @@ if __name__ == '__main__' :
     parser.add_argument("-mode", type=str, choices = ['search', 'compute'], help=" mode of operation", required = True)
     parser.add_argument("-list", type=str,  help=" list of image to process", required = False)
     parser.add_argument("-odir", type=str,  help=" output dir", required = False, default = '.')
+    parser.add_argument("-layer", type=str,  help=" output dir", required = False, default = '.')
     pargs = parser.parse_args()     
     configuration_file = pargs.config        
-    ssearch = SSearch(pargs.config, pargs.name)
+    ssearch = SSearch(pargs.config, pargs.name, pargs.layer)
     metric = 'cos'
     norm = 'square_root'
     if pargs.mode == 'compute' :        
