@@ -1,6 +1,6 @@
 import sys
 #Please, change the following path to where convnet2 can be located
-sys.path.append("/home/jsaavedr/Research/git/tensorflow-2/convnet2")
+sys.path.append("/content/convnet2")
 import tensorflow as tf
 import datasets.data as data
 import utils.configuration as conf
