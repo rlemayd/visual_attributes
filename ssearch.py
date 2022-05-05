@@ -168,7 +168,7 @@ if __name__ == '__main__' :
     metric = 'cos'
     norm = 'square_root'
     if pargs.mode == 'compute' :        
-        ssearch.compute_features_from_catalog()        
+        ssearch.compute_features_from_catalog(pargs.layer)        
     if pargs.mode == 'search' :
         ssearch.load_features()        
         if pargs.list is not None :
