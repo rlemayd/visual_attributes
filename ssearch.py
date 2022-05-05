@@ -111,7 +111,7 @@ class SSearch :
         return idx_sorted[:90]
         
                                 
-    def compute_features_from_catalog(self):
+    def compute_features_from_catalog(self, layer_name):
         n_batch = self.configuration.get_batch_size()        
         images = np.empty((self.data_size, self.input_shape[0], self.input_shape[1], self.input_shape[2]), dtype = np.float32)
         for i, filename in enumerate(self.filenames) :
@@ -128,8 +128,8 @@ class SSearch :
             result.append(self.compute_features(batch))
         fvs = np.concatenate(result)    
         print('fvs {}'.format(fvs.shape))    
-        fvs_file = os.path.join(self.ssearch_dir, "features.np")
-        fshape_file = os.path.join(self.ssearch_dir, "features_shape.np")
+        fvs_file = os.path.join(self.ssearch_dir, f"features_{layer_name}.np")
+        fshape_file = os.path.join(self.ssearch_dir, f"features_{layer_name}_shape.np")
         np.asarray(fvs.shape).astype(np.int32).tofile(fshape_file)       
         fvs.astype(np.float32).tofile(fvs_file)
         print('fvs saved at {}'.format(fvs_file))
